@@ -1,0 +1,26 @@
+<RCC>
+  <qresource prefix="vinyl">
+    <file>vinyl.png</file>
+  </qresource>
+  <qresource prefix="plus">
+    <file>louder.svg</file>
+  </qresource>
+  <qresource prefix="minus">
+    <file>silenter.svg</file>
+  </qresource>
+  <qresource prefix="previous">
+    <file>previous.svg</file>
+  </qresource>
+  <qresource prefix="next">
+    <file>next.svg</file>
+  </qresource>
+  <qresource prefix="pause">
+    <file>pause.svg</file>
+  </qresource>
+  <qresource prefix="play">
+    <file>play.svg</file>
+  </qresource>
+  <qresource prefix="albomCover">
+    <file>placeholder.jpg</file>
+  </qresource>
+</RCC>
