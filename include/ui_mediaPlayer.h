@@ -55,7 +55,7 @@ public:
         vinyl->setScaledContents(true);
         albomCover = new QLabel(mainwindow);
         albomCover->setObjectName(QString::fromUtf8("albomCover"));
-        albomCover->setGeometry(QRect(-40, -20, 151, 151));
+        albomCover->setGeometry(QRect(-40, -10, 151, 151));
         albomCover->setPixmap(QPixmap(QString::fromUtf8(":/albomCover/placeholder.jpg")));
         albomCover->setScaledContents(true);
         pause = new QPushButton(mainwindow);
@@ -213,8 +213,8 @@ public:
         prev->setText(QString());
         minus->setText(QString());
         plus->setText(QString());
-        label->setText(QCoreApplication::translate("MainWindow", " \320\257\040\320\277\320\276\320\274\320\275\321\203\040\320\277\320\265\320\275\320\270\321\201", nullptr));
-        label_2->setText(QCoreApplication::translate("MainWindow", "\320\237\320\265\320\275\320\270\321\201", nullptr));
+        label->setText(QCoreApplication::translate("MainWindow", "Я помню", nullptr));
+        label_2->setText(QCoreApplication::translate("MainWindow", "artist", nullptr));
     } // retranslateUi
 
 };

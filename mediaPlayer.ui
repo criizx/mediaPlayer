@@ -336,8 +336,14 @@ QSlider::add-page:vertical {
 }
 </string>
     </property>
-    <property name="text">
-     <string>Я помню пенис</string>
+    <property name="text">// taglib_utils.cpp
+        #include "taglib_utils.h"
+
+        QString tagToQString(const TagLib::String& str) {
+        return QString::fromStdWString(str.toWString());
+        }
+
+        <string>Я помню пенис</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
