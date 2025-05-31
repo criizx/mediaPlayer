@@ -1,9 +1,9 @@
 #pragma once
 
 #include <QLabel>
+#include <cmath>
 #include <QVariantAnimation>
 #include <QPainter>
-#include <cmath>
 #include <QPaintEvent>
 
 class RotatingLabel final : public QLabel {
@@ -56,13 +56,13 @@ public:
         }
     }
 
-    bool isRunning() const {
+    [[nodiscard]] bool isRunning() const {
         return _anim->state() == QAbstractAnimation::Running;
     }
 
 protected:
     void paintEvent(QPaintEvent *event) override {
-        const QPixmap src = pixmap(Qt::ReturnByValue);
+        QPixmap src = pixmap(Qt::ReturnByValue);
         if (src.isNull()) {
             QLabel::paintEvent(event);
             return;

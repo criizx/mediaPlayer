@@ -1,0 +1,5 @@
+/home/rr/CLionProjects/mediaPlayer/CMakeFiles/mediaPlayer.dir
+/home/rr/CLionProjects/mediaPlayer/CMakeFiles/edit_cache.dir
+/home/rr/CLionProjects/mediaPlayer/CMakeFiles/rebuild_cache.dir
+/home/rr/CLionProjects/mediaPlayer/CMakeFiles/mediaPlayer_autogen_timestamp_deps.dir
+/home/rr/CLionProjects/mediaPlayer/CMakeFiles/mediaPlayer_autogen.dir
