@@ -1,0 +1,15 @@
+# Игнорировать папку сборки CMake
+cmake-build-debug/
+cmake-build-release/
+
+# Игнорировать файлы и папки IDE JetBrains (CLion, IntelliJ и др.)
+.idea/
+*.iml
+
+# Дополнительно (опционально) можно добавить другие временные файлы
+*.o
+*.a
+*.so
+*.dylib
+*.out
+*.exe

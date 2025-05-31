@@ -1,1 +1,0 @@
-/usr/bin/c++ CMakeFiles/mediaPlayer.dir/mediaPlayer_autogen/mocs_compilation.cpp.o CMakeFiles/mediaPlayer.dir/main.cpp.o CMakeFiles/mediaPlayer.dir/qrc_test.cpp.o -o mediaPlayer  /usr/lib/libQt5Svg.so.5.15.11 /usr/lib/libQt5Widgets.so.5.15.11 /usr/lib/libQt5Gui.so.5.15.11 /usr/lib/libQt5Core.so.5.15.11
