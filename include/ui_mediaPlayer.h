@@ -215,7 +215,7 @@ public:
         plus->setText(QString());
         label->setText(QCoreApplication::translate("MainWindow", "Я помню", nullptr));
         label_2->setText(QCoreApplication::translate("MainWindow", "artist", nullptr));
-    } // retranslateUi
+    }
 
 };
 
