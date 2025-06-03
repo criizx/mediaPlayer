@@ -1,33 +1,60 @@
-// music_player_window.cpp
 #include "../include/music_player_window.h"
 #include <QCoreApplication>
 #include <QIcon>
+#include <QSize>
 
 music_player_window::music_player_window(QWidget *parent)
-	: QMainWindow(parent)
+    : QMainWindow(parent),
+      vinylRot(nullptr),
+      coverRot(nullptr),
+      anim(nullptr)
 {
-	setFixedSize(480, 630);
-	ui.setupUi(this);
+    setFixedSize(480, 650);
+    ui.setupUi(this);
+    
+    QWidget *container = ui.mainwindow;
+    
+    vinylRot = new RotatingLabel(container);
+    vinylRot->setGeometry(ui.vinyl->geometry());
+    vinylRot->setPixmap(ui.vinyl->pixmap(Qt::ReturnByValue));
+    vinylRot->setScaledContents(ui.vinyl->hasScaledContents());
+    ui.vinyl->hide();
+    
+    coverRot = new RotatingLabel(container);
+    coverRot->setGeometry(ui.albomCover->geometry());
+    coverRot->setPixmap(ui.albomCover->pixmap(Qt::ReturnByValue));
+    coverRot->setScaledContents(ui.albomCover->hasScaledContents());
+    ui.albomCover->hide();
+    
+    coverRot->stackUnder(vinylRot);
+    
+    anim = new QVariantAnimation(this);
+    anim->setDuration(5000);
+    anim->setLoopCount(-1);
+    anim->setStartValue(0.0);
+    anim->setEndValue(360.0);
 
-	QWidget *container = centralWidget();
+    connect(anim, &QVariantAnimation::valueChanged, this,
+            [this](const QVariant &value) {
+                const qreal angle = value.toReal();
+                vinylRot->setAngle(angle);
+                coverRot->setAngle(angle);
+            });
+    anim->start();
 
-	rot = new RotatingLabel(container);
-	rot->setGeometry(ui.vinyl->geometry());
-	rot->setFixedSize(ui.vinyl->size());
-	rot->setPixmap(*ui.vinyl->pixmap());
-	rot->setScaledContents(ui.vinyl->hasScaledContents());
+    ui.label->setText(QCoreApplication::translate("MainWindow", "Я помню", nullptr));
+    ui.label_2->setText(QCoreApplication::translate("MainWindow", "artist", nullptr));
 
-	ui.vinyl->hide();
-	ui.label->setText(QCoreApplication::translate("MainWindow", "Я hello", nullptr));
-	rot->start();
+    ui.pause->setCheckable(true);
+    const QIcon playIcon(":/play/play.svg");
+    const QIcon pauseIcon(":/pause/pause.svg");
+    ui.pause->setIcon(playIcon);
+    ui.pause->setIconSize(QSize(95, 95));
 
-	ui.pause->setCheckable(true);
-	ui.pause->setIcon(QIcon(":/play/play.svg"));
-	ui.pause->setIconSize(QSize(95, 95));
-
-	const QIcon pauseIcon(":/pause/pause.svg");
-	connect(ui.pause, &QPushButton::toggled, this, [=](bool checked) {
-		ui.pause->setIcon(checked ? pauseIcon : QIcon(":/play/play.svg"));
-		checked ? rot->pause() : rot->start();
-	});
+    connect(ui.pause, &QPushButton::toggled, this,
+            [this, playIcon, pauseIcon](const bool checked) {
+                ui.pause->setIcon(checked ? pauseIcon : playIcon);
+                if (checked) anim->pause();
+                else         anim->resume();
+            });
 }

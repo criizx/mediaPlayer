@@ -6,14 +6,13 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC OFF)
 
 # -------------------- Qt5 --------------------
-find_package(Qt5 REQUIRED COMPONENTS Core Gui Svg Widgets)
+find_package(Qt5 REQUIRED COMPONENTS Core Gui Widgets Svg)
 
 # -------------------- ZLIB --------------------
 find_package(ZLIB REQUIRED)
 
 # -------------------- TagLib --------------------
 find_package(Taglib QUIET)
-
 if (Taglib_FOUND AND TARGET Taglib::Taglib)
     set(MY_TAGLIB_TARGET Taglib::Taglib)
 else()
@@ -23,22 +22,30 @@ endif()
 
 message(STATUS "TagLib target: ${MY_TAGLIB_TARGET}")
 
-# -------------------- ресурсы --------------------
+# -------------------- Ресурсы (если есть .qrc-файлы) --------------------
+# Пример: если у вас есть source/test.qrc, то:
 set(TEST_QRC "${CMAKE_SOURCE_DIR}/source/test.qrc")
 qt5_add_resources(RES_SOURCES ${TEST_QRC})
 
-# -------------------- основной исполняемый файл --------------------
+# -------------------- Основной исполняемый файл --------------------
 add_executable(mediaPlayer
+        # Список всех исходников:
         main.cpp
-        src/metadata_parser.cpp
-        ${RES_SOURCES}
-        include/music_player_window.h
         src/music_player_window.cpp
+        src/metadata_parser.cpp   # убрать, если не нужен
+
+        # Явно указываем заголовки с Q_OBJECT, чтобы AUTOMOC их подхватил:
         include/RotatingLabel.h
+        include/music_player_window.h
+        include/ui_mediaPlayer.h  # UI-заголовок, сгенерированный uic
+
+        ${RES_SOURCES}
 )
 
+# Указываем папку с нашими заголовками
 target_include_directories(mediaPlayer PRIVATE include)
 
+# Линкуем библиотеки
 target_link_libraries(mediaPlayer
         Qt5::Core
         Qt5::Gui
@@ -46,19 +53,4 @@ target_link_libraries(mediaPlayer
         Qt5::Svg
         ${MY_TAGLIB_TARGET}
         ZLIB::ZLIB
-)
-
-# -------------------- тестовый исполняемый файл --------------------
-add_executable(MetadataTest
-        src/metadata_test.cpp
-        src/metadata_parser.cpp
-)
-
-target_include_directories(MetadataTest PRIVATE include)
-
-target_link_libraries(MetadataTest
-        Qt5::Core
-        Qt5::Gui
-        ZLIB::ZLIB
-        ${MY_TAGLIB_TARGET}
 )

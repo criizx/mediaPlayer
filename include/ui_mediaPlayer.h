@@ -55,7 +55,7 @@ public:
         vinyl->setScaledContents(true);
         albomCover = new QLabel(mainwindow);
         albomCover->setObjectName(QString::fromUtf8("albomCover"));
-        albomCover->setGeometry(QRect(-40, -10, 151, 151));
+        albomCover->setGeometry(QRect(-34, -19, 151, 151));
         albomCover->setPixmap(QPixmap(QString::fromUtf8(":/albomCover/placeholder.jpg")));
         albomCover->setScaledContents(true);
         pause = new QPushButton(mainwindow);

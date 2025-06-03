@@ -12,8 +12,10 @@ class RotatingLabel final : public QLabel {
 public:
     explicit RotatingLabel(QWidget *parent = nullptr)
         : QLabel(parent),
-          _anim(new QVariantAnimation(this))
+          _anim(new QVariantAnimation(this)),
+          _angle(0.0)
     {
+
         _anim->setDuration(5000);
         _anim->setLoopCount(-1);
         _anim->setStartValue(0.0);
@@ -31,6 +33,9 @@ public:
                 });
     }
 
+    ~RotatingLabel() override = default;
+
+    
     void start() const {
         if (_anim->state() == QAbstractAnimation::Paused) {
             _anim->resume();
@@ -51,7 +56,7 @@ public:
     void stop() {
         if (_anim->state() != QAbstractAnimation::Stopped) {
             _anim->stop();
-            _angle = 0;
+            _angle = 0.0;
             update();
         }
     }
@@ -60,9 +65,15 @@ public:
         return _anim->state() == QAbstractAnimation::Running;
     }
 
+    qreal angle() const { return _angle; }
+    void setAngle(qreal a) {
+        _angle = a;
+        update();
+    }
+
 protected:
     void paintEvent(QPaintEvent *event) override {
-        QPixmap src = pixmap(Qt::ReturnByValue);
+        const QPixmap src = pixmap(Qt::ReturnByValue);
         if (src.isNull()) {
             QLabel::paintEvent(event);
             return;
@@ -79,10 +90,12 @@ protected:
                                      height() / srcSize.height());
         p.scale(scale, scale);
 
-        p.drawPixmap(QPointF(-srcSize.width() / 2, -srcSize.height() / 2), src);
+        p.drawPixmap(QPointF(-srcSize.width() / 2.0,
+                             -srcSize.height() / 2.0),
+                     src);
     }
 
 private:
     QVariantAnimation *_anim;
-    qreal _angle = 0.0;
+    qreal _angle;
 };

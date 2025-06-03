@@ -1,10 +1,9 @@
 #pragma once
 
-#include <QMainWindow>
 #include "ui_mediaPlayer.h"
 #include "RotatingLabel.h"
 
-class music_player_window : public QMainWindow {
+class music_player_window final : public QMainWindow {
 	Q_OBJECT
 
 public:
@@ -12,5 +11,8 @@ public:
 
 private:
 	Ui::MainWindow ui;
-	RotatingLabel* rot = nullptr;
+
+	RotatingLabel *vinylRot = nullptr;
+	RotatingLabel *coverRot = nullptr;
+	QVariantAnimation *anim  = nullptr;
 };
