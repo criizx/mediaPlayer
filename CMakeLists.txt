@@ -5,37 +5,13 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC OFF)
 
-# -------------------------------------------------------
-# Qt5
-# -------------------------------------------------------
+# -------------------- Qt5 --------------------
 find_package(Qt5 REQUIRED COMPONENTS Core Gui Svg Widgets)
 
-set(TEST_QRC "${CMAKE_SOURCE_DIR}/source/test.qrc")
-qt5_add_resources(RES_SOURCES ${TEST_QRC})
-
-# -------------------------------------------------------
-# Основной исполняемый файл
-# -------------------------------------------------------
-add_executable(mediaPlayer
-        main.cpp
-        ${RES_SOURCES}
-        include/RotatingLabel.h
-        include/ui_mediaPlayer.h
-)
-
-target_link_libraries(mediaPlayer
-        Qt5::Core
-        Qt5::Gui
-        Qt5::Widgets
-        Qt5::Svg
-)
-
-# -------------------------------------------------------
-# TagLib + ZLIB
-# -------------------------------------------------------
+# -------------------- ZLIB --------------------
 find_package(ZLIB REQUIRED)
 
-# Попытка найти IMPORTED target
+# -------------------- TagLib --------------------
 find_package(Taglib QUIET)
 
 if (Taglib_FOUND AND TARGET Taglib::Taglib)
@@ -45,9 +21,34 @@ else()
     set(MY_TAGLIB_TARGET ${TAGLIB_LIB})
 endif()
 
-# -------------------------------------------------------
-# Тест на метаданные
-# -------------------------------------------------------
+message(STATUS "TagLib target: ${MY_TAGLIB_TARGET}")
+
+# -------------------- ресурсы --------------------
+set(TEST_QRC "${CMAKE_SOURCE_DIR}/source/test.qrc")
+qt5_add_resources(RES_SOURCES ${TEST_QRC})
+
+# -------------------- основной исполняемый файл --------------------
+add_executable(mediaPlayer
+        main.cpp
+        src/metadata_parser.cpp
+        ${RES_SOURCES}
+        include/music_player_window.h
+        src/music_player_window.cpp
+        include/RotatingLabel.h
+)
+
+target_include_directories(mediaPlayer PRIVATE include)
+
+target_link_libraries(mediaPlayer
+        Qt5::Core
+        Qt5::Gui
+        Qt5::Widgets
+        Qt5::Svg
+        ${MY_TAGLIB_TARGET}
+        ZLIB::ZLIB
+)
+
+# -------------------- тестовый исполняемый файл --------------------
 add_executable(MetadataTest
         src/metadata_test.cpp
         src/metadata_parser.cpp
@@ -61,4 +62,3 @@ target_link_libraries(MetadataTest
         ZLIB::ZLIB
         ${MY_TAGLIB_TARGET}
 )
-
