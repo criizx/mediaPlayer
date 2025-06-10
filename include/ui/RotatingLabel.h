@@ -65,8 +65,8 @@ public:
         return _anim->state() == QAbstractAnimation::Running;
     }
 
-    qreal angle() const { return _angle; }
-    void setAngle(qreal a) {
+    [[nodiscard]] qreal angle() const { return _angle; }
+    void setAngle(const qreal a) {
         _angle = a;
         update();
     }

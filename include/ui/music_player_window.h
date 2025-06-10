@@ -1,7 +1,10 @@
 #pragma once
 
+#include <memory>
 #include "ui_mediaPlayer.h"
-#include "RotatingLabel.h"
+
+#include "player_ui.h"
+#include "disc_rotator.h"
 
 class music_player_window final : public QMainWindow {
 	Q_OBJECT
@@ -10,9 +13,7 @@ public:
 	explicit music_player_window(QWidget *parent = nullptr);
 
 private:
-	Ui::MainWindow ui;
-
-	RotatingLabel *vinylRot = nullptr;
-	RotatingLabel *coverRot = nullptr;
-	QVariantAnimation *anim  = nullptr;
+	Ui::MainWindow ui{};
+	std::unique_ptr<player_ui> uiManager;
+	std::unique_ptr<disc_rotator> rotator;
 };

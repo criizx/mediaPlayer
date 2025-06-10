@@ -5,8 +5,8 @@
 #include <taglib/id3v2frame.h>
 #include <taglib/attachedpictureframe.h>
 
-#include "../include/music_metadata.h"
-#include "../include/metadata_parser.h"
+#include "../../include/player_logic/music_metadata.h"
+#include "../../include/player_logic/metadata_parser.h"
 
 music_metadata metadata_parser::parse(const QString& filepath) {
 	music_metadata metadata;

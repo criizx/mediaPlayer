@@ -17,7 +17,7 @@ public:
 		QString mimeType;
 		QString description;
 
-		QImage toImage() const {
+		[[nodiscard]] QImage toImage() const {
 			QImage img;
 			img.loadFromData(rawData, mimeType.toUtf8().constData());
 			return img;

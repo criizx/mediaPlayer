@@ -6,7 +6,7 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC OFF)
 
 # -------------------- Qt5 --------------------
-find_package(Qt5 REQUIRED COMPONENTS Core Gui Widgets Svg)
+find_package(Qt5 REQUIRED COMPONENTS Core Gui Widgets Svg Multimedia)
 
 # -------------------- ZLIB --------------------
 find_package(ZLIB REQUIRED)
@@ -23,34 +23,48 @@ endif()
 message(STATUS "TagLib target: ${MY_TAGLIB_TARGET}")
 
 # -------------------- Ресурсы (если есть .qrc-файлы) --------------------
-# Пример: если у вас есть source/test.qrc, то:
 set(TEST_QRC "${CMAKE_SOURCE_DIR}/source/test.qrc")
 qt5_add_resources(RES_SOURCES ${TEST_QRC})
 
-# -------------------- Основной исполняемый файл --------------------
-add_executable(mediaPlayer
-        # Список всех исходников:
+# -------------------- Исходники --------------------
+set(SOURCES
         main.cpp
-        src/music_player_window.cpp
-        src/metadata_parser.cpp   # убрать, если не нужен
 
-        # Явно указываем заголовки с Q_OBJECT, чтобы AUTOMOC их подхватил:
-        include/RotatingLabel.h
-        include/music_player_window.h
-        include/ui_mediaPlayer.h  # UI-заголовок, сгенерированный uic
+        src/ui/music_player_window.cpp
+        src/ui/player_ui.cpp
+        src/ui/disk_rotator.cpp
 
-        ${RES_SOURCES}
+        src/player_logic/media_playback.cpp
+        src/player_logic/metadata_parser.cpp
+        src/player_logic/playlist_loader.cpp
 )
 
-# Указываем папку с нашими заголовками
+# -------------------- Заголовки с Q_OBJECT --------------------
+set(HEADERS
+        include/ui/music_player_window.h
+        include/ui/player_ui.h
+        include/ui/disc_rotator.h
+        include/ui/RotatingLabel.h
+        include/ui/ui_mediaPlayer.h
+
+        include/player_logic/media_playback.h
+        include/player_logic/metadata_parser.h
+        include/player_logic/playlist_loader.h
+        include/player_logic/music_metadata.h
+)
+
+add_executable(mediaPlayer ${SOURCES} ${HEADERS} ${RES_SOURCES})
+
+# -------------------- Подключаем директории --------------------
 target_include_directories(mediaPlayer PRIVATE include)
 
-# Линкуем библиотеки
+# -------------------- Линкуем библиотеки --------------------
 target_link_libraries(mediaPlayer
         Qt5::Core
         Qt5::Gui
         Qt5::Widgets
         Qt5::Svg
+        Qt5::Multimedia
         ${MY_TAGLIB_TARGET}
         ZLIB::ZLIB
 )
