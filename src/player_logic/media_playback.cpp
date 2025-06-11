@@ -1,10 +1,22 @@
 #include "../../include/player_logic/media_playback.h"
 #include "../../include/player_logic/playlist_loader.h"
+#include <QStandardPaths>
+
 
 media_playback::media_playback(const QString& folderPath) {
-	auto [loadedPlaylist, loadedPlayer] = playlist_loader::load_from_folder(folderPath);
-	playlist = std::move(loadedPlaylist);
-	player = std::move(loadedPlayer);
+	QString actualPath = folderPath;
+
+	if (actualPath.isEmpty()) {
+		actualPath = QStandardPaths::writableLocation(QStandardPaths::MusicLocation);
+	}
+	try {
+		auto [loadedPlaylist, loadedPlayer] = playlist_loader::load_from_folder(actualPath);
+		playlist = std::move(loadedPlaylist);
+		player = std::move(loadedPlayer);
+	} catch (const std::exception& e) {
+		qCritical() << "error loading media" << e.what();
+		throw;
+	}
 }
 
 void media_playback::play() const {
@@ -23,7 +35,7 @@ void media_playback::previous_track() const {
 	playlist->previous();
 }
 
-void media_playback::set_volume(int vol) const {
+void media_playback::set_volume(const int vol) const {
 	player->setVolume(vol);
 }
 

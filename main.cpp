@@ -1,13 +1,13 @@
 #include <QDir>
-#include "ui/music_player_window.h"
+#include "./include/controller/controller.h"
 
 int main(int argc, char *argv[]) {
+
 	QApplication app(argc, argv);
+	const QString music_folder = QDir::homePath() + "/CLionProjects/mediaPlayer/test_data/music";
+	Controller controller(music_folder);
 
-	QString musicFolder = QDir::homePath() + "/CLionProjects/mediaPlayer/test_data/music";
-
-	music_player_window w;
-	w.show();
+	controller.show();
 
 	return QApplication::exec();
 }

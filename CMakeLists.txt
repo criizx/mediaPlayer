@@ -37,6 +37,7 @@ set(SOURCES
         src/player_logic/media_playback.cpp
         src/player_logic/metadata_parser.cpp
         src/player_logic/playlist_loader.cpp
+        src/controller/controller.cpp
 )
 
 # -------------------- Заголовки с Q_OBJECT --------------------
@@ -51,6 +52,8 @@ set(HEADERS
         include/player_logic/metadata_parser.h
         include/player_logic/playlist_loader.h
         include/player_logic/music_metadata.h
+
+        include/controller/controller.h
 )
 
 add_executable(mediaPlayer ${SOURCES} ${HEADERS} ${RES_SOURCES})

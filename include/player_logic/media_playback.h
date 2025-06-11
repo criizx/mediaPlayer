@@ -8,7 +8,7 @@
 class media_playback
 {
 public:
-	explicit media_playback(const QString& folderPath);
+	explicit media_playback(const QString& folderPath = "");
 
 	void play() const;
 	void pause() const;

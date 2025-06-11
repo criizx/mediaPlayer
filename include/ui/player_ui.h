@@ -9,12 +9,17 @@ public:
 
 	void setup(QWidget *container);
 
-	RotatingLabel *vinylLabel() const;
-	RotatingLabel *coverLabel() const;
-	QPushButton *pauseButton() const;
+	RotatingLabel *vinyl_label() const;
+	RotatingLabel *cover_label() const;
+	QPushButton *pause_button() const;
+	QPushButton *next_button() const;
+	QPushButton *prev_button() const;
+	QSlider *volume_slider() const;
+	QPushButton* add_volume() const;
+	QPushButton* reduce_volume() const;
 
 private:
 	Ui::MainWindow &ui;
-	RotatingLabel *vinylRot = nullptr;
-	RotatingLabel *coverRot = nullptr;
+	RotatingLabel *vinyl_rot = nullptr;
+	RotatingLabel *cover_rot = nullptr;
 };
