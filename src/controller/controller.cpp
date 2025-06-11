@@ -1,5 +1,7 @@
 #include "../../include/controller/controller.h"
+#include "../../include/player_logic/metadata_parser.h"
 #include <algorithm>
+#include <QMediaPlayer>
 
 Controller::Controller(const QString& path, QObject *parent)
 	: QObject(parent)
@@ -7,6 +9,9 @@ Controller::Controller(const QString& path, QObject *parent)
 	, playIcon(":/play/play.svg")
 	, pauseIcon(":/pause/pause.svg")
 {
+	playback.play();
+	metadata = metadata_parser::parse(playback.get_current_file_path());
+	change_disp_metadata();
 	setup_connections();
 	setup_rotator();
 }
@@ -21,6 +26,8 @@ void Controller::setup_connections() {
 
 	auto* volume_slider = player.get_UI_manager()->volume_slider();
 
+	change_volume(volume_slider->value());
+
 	connect(pause_btn, &QPushButton::toggled,
 			this, &Controller::on_play_pause_toggled);
 
@@ -32,6 +39,7 @@ void Controller::setup_connections() {
 
 	connect(add_volume_btn, &QPushButton::clicked, this, &Controller::add_volume);
 	connect(reduce_volume_btn, &QPushButton::clicked, this, &Controller::reduce_volume);
+	connect(playback.get_player(), &QMediaPlayer::mediaStatusChanged, this, &Controller::handle_media_status);
 }
 
 void Controller::on_play_pause_toggled(const bool checked) const {
@@ -49,12 +57,15 @@ void Controller::on_play_pause_toggled(const bool checked) const {
 	}
 }
 
-void Controller::next() const {
+void Controller::next(){
 	playback.next_track();
+	change_disp_metadata();
+
 }
 
-void Controller::prev() const {
+void Controller::prev() {
 	playback.previous_track();
+	change_disp_metadata();
 }
 
 void Controller::setup_rotator() const {
@@ -80,4 +91,16 @@ void Controller::reduce_volume() const {
 	const int new_volume = std::max(current - 10, 0);
 	playback.set_volume(new_volume);
 	slider->setValue(new_volume);
+}
+
+void Controller::change_disp_metadata() {
+	metadata = metadata_parser::parse(playback.get_current_file_path());
+	player.get_UI_manager()->change_ui(metadata);
+}
+
+
+void Controller::handle_media_status(const QMediaPlayer::MediaStatus status)  {
+	if (status == QMediaPlayer::EndOfMedia) {
+		change_disp_metadata();
+	}
 }

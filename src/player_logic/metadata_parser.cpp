@@ -13,8 +13,9 @@ music_metadata metadata_parser::parse(const QString& filepath) {
 
 	if (const TagLib::FileRef ref(filepath.toUtf8().constData()); !ref.isNull() && ref.tag()) {
 		const auto* tag = ref.tag();
-		metadata.title   = QString::fromStdWString(tag->title().toWString());
-		metadata.artist  = QString::fromStdWString(tag->artist().toWString());
+
+		metadata.title = strdup(tag->title().toCString(true));
+		metadata.artist = strdup(tag->artist().toCString(true));
 	}
 
 	if (TagLib::MPEG::File file(filepath.toUtf8().constData()); file.isValid()) {

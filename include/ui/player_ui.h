@@ -2,6 +2,7 @@
 
 #include "ui_mediaPlayer.h"
 #include "RotatingLabel.h"
+#include "player_logic/music_metadata.h"
 
 class player_ui {
 public:
@@ -17,6 +18,7 @@ public:
 	QSlider *volume_slider() const;
 	QPushButton* add_volume() const;
 	QPushButton* reduce_volume() const;
+	void change_ui(const music_metadata& metadata) const;
 
 private:
 	Ui::MainWindow &ui;

@@ -9,8 +9,8 @@
 
 class music_metadata {
 public:
-	QString title;
-	QString artist;
+	char * title{};
+	char * artist{};
 
 	struct ImageData {
 		QByteArray rawData;
@@ -25,7 +25,5 @@ public:
 	};
 
 	std::optional<ImageData> coverArt;
-
-	void debugPrint() const;
 };
 

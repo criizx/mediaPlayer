@@ -42,3 +42,11 @@ void media_playback::set_volume(const int vol) const {
 int media_playback::volume() const {
 	return player->volume();
 }
+
+QString media_playback::get_current_file_path() const {
+	return player->currentMedia().request().url().toLocalFile();
+}
+
+QMediaPlayer* media_playback::get_player() const {
+	return player.get();
+}

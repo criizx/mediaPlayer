@@ -1,5 +1,7 @@
 #include "../../include/ui/player_ui.h"
 
+#include "player_logic/music_metadata.h"
+
 player_ui::player_ui(Ui::MainWindow &ui) : ui(ui) {}
 
 void player_ui::setup(QWidget *container) {
@@ -48,4 +50,9 @@ QPushButton* player_ui::add_volume() const {
 
 QPushButton* player_ui::reduce_volume() const {
 	return ui.minus;
+}
+
+void player_ui::change_ui(const music_metadata& metadata) const {
+	ui.label->setText(QCoreApplication::translate("MainWindow", strlen(metadata.title) == 0 ? "name" : metadata.title, nullptr));
+	ui.label_2->setText(QCoreApplication::translate("MainWindow", strlen(metadata.artist) == 0 ? "artist" : metadata.artist, nullptr));
 }

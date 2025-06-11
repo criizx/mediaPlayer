@@ -16,6 +16,9 @@ public:
 	void previous_track() const;
 	void set_volume(int vol) const;
 	int volume() const;
+	QString get_current_file_path() const;
+	QMediaPlayer* get_player() const;
+
 
 private:
 	std::unique_ptr<QMediaPlaylist> playlist;
