@@ -55,4 +55,13 @@ QPushButton* player_ui::reduce_volume() const {
 void player_ui::change_ui(const music_metadata& metadata) const {
 	ui.label->setText(QCoreApplication::translate("MainWindow", strlen(metadata.title) == 0 ? "name" : metadata.title, nullptr));
 	ui.label_2->setText(QCoreApplication::translate("MainWindow", strlen(metadata.artist) == 0 ? "artist" : metadata.artist, nullptr));
+	if (metadata.coverArt) {
+		const auto& imageData = *metadata.coverArt;
+
+		if (const QImage img = imageData.toImage(); !img.isNull()) {
+			cover_rot->setPixmap(QPixmap::fromImage(img));
+		}
+	} else {
+		cover_rot->setPixmap(QPixmap(QString::fromUtf8(":/albomCover/placeholder.jpg")));
+	}
 }

@@ -99,8 +99,8 @@ void Controller::change_disp_metadata() {
 }
 
 
-void Controller::handle_media_status(const QMediaPlayer::MediaStatus status)  {
-	if (status == QMediaPlayer::EndOfMedia) {
+void Controller::handle_media_status(const QMediaPlayer::MediaStatus status) {
+	if (status == QMediaPlayer::LoadedMedia || status == QMediaPlayer::BufferedMedia) {
 		change_disp_metadata();
 	}
 }
