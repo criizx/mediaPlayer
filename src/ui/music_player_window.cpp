@@ -28,7 +28,7 @@ void music_player_window::setup_UI() {
 	   uiManager->cover_label()
 	);
 
-	ui.label->setText(QCoreApplication::translate("MainWindow", "Я помню", nullptr));
+	ui.label->setText(QCoreApplication::translate("MainWindow", "song name", nullptr));
 	ui.label_2->setText(QCoreApplication::translate("MainWindow", "artist", nullptr));
 }
 
