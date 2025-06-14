@@ -2,6 +2,8 @@
 #include "../../include/player_logic/playlist_loader.h"
 #include <QStandardPaths>
 
+#include "player_logic/metadata_parser.h"
+
 
 media_playback::media_playback(const QString& folderPath) {
 	QString actualPath = folderPath;
@@ -49,4 +51,10 @@ QString media_playback::get_current_file_path() const {
 
 QMediaPlayer* media_playback::get_player() const {
 	return player.get();
+}
+
+void media_playback::change_music_path(const QString& folderPath) {
+	auto [newPlaylist, newPlayer] = playlist_loader::load_from_folder(folderPath);
+	playlist = std::move(newPlaylist);
+	player = std::move(newPlayer);
 }

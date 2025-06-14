@@ -23,4 +23,7 @@
   <qresource prefix="albomCover">
     <file>placeholder.jpg</file>
   </qresource>
+  <qresource prefix="chng_pth">
+    <file>path_chng.svg</file>
+  </qresource>
 </RCC>

@@ -11,6 +11,7 @@ class music_metadata {
 public:
 	char * title{};
 	char * artist{};
+	bool flag;
 
 	struct ImageData {
 		QByteArray rawData;

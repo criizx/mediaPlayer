@@ -11,14 +11,14 @@ std::pair<std::unique_ptr<QMediaPlaylist>, std::unique_ptr<QMediaPlayer>> playli
 	auto player = std::make_unique<QMediaPlayer>();
 
 	const QDir dir(path);
-	const QStringList filters = { "*.mp3", "*.wav", "*.flac", "*.aac", "*.ogg", "*.mp4" };
+	const QStringList filters = { "*.mp3", "*.wav", "*.flac", "*.aac", "*.ogg" };
 
 	for (const QFileInfoList fileList = dir.entryInfoList(filters, QDir::Files); const QFileInfo &file : fileList) {
 		playlist->addMedia(QUrl::fromLocalFile(file.absoluteFilePath()));
 	}
 
 	playlist->setCurrentIndex(0);
-	playlist->setPlaybackMode(QMediaPlaylist::Loop);
+	playlist->setPlaybackMode(QMediaPlaylist::Random);
 
 	player->setPlaylist(playlist.get());
 

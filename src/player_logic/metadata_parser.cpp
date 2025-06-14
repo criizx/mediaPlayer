@@ -8,12 +8,20 @@
 #include "../../include/player_logic/music_metadata.h"
 #include "../../include/player_logic/metadata_parser.h"
 
+#include <qfileinfo.h>
+
 music_metadata metadata_parser::parse(const QString& filepath) {
+
 	music_metadata metadata;
+
+	if (const QFileInfo fileInfo(filepath); !fileInfo.isFile()) {
+		metadata.flag = false;
+		return metadata;
+	}
 
 	if (const TagLib::FileRef ref(filepath.toUtf8().constData()); !ref.isNull() && ref.tag()) {
 		const auto* tag = ref.tag();
-
+		metadata.flag = true;
 		metadata.title = strdup(tag->title().toCString(true));
 		metadata.artist = strdup(tag->artist().toCString(true));
 	}

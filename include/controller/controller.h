@@ -23,7 +23,6 @@ class Controller final : public QObject {
 		explicit Controller(const QString& path, QObject *parent = nullptr);
 		void show() { player.showWindow(); }
 
-		void change_music_path();
 		void change_disp_metadata();
 
 
@@ -35,6 +34,5 @@ public slots:
 		void add_volume() const;
 		void reduce_volume() const;
 		void handle_media_status(QMediaPlayer::MediaStatus status);
-
-
+		void change_path();
 };

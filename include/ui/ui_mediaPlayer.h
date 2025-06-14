@@ -32,6 +32,7 @@ public:
     QSlider *sound;
     QPushButton *minus;
     QPushButton *plus;
+    QPushButton *change_path;  // Используем эту кнопку
     QLabel *label;
     QLabel *label_2;
 
@@ -105,7 +106,7 @@ public:
         prev->setAutoExclusive(false);
         sound = new QSlider(mainwindow);
         sound->setObjectName(QString::fromUtf8("sound"));
-        sound->setGeometry(QRect(410, 90, 61, 221));
+        sound->setGeometry(QRect(390, 90, 61, 221));
         sound->setContextMenuPolicy(Qt::NoContextMenu);
         sound->setStyleSheet(QString::fromUtf8("QSlider::groove:vertical {\n"
 "    background: #D5D5D5;    \n"
@@ -136,7 +137,7 @@ public:
         sound->setInvertedControls(false);
         minus = new QPushButton(mainwindow);
         minus->setObjectName(QString::fromUtf8("minus"));
-        minus->setGeometry(QRect(426, 320, 31, 31));
+        minus->setGeometry(QRect(406, 320, 31, 31));
         minus->setStyleSheet(QString::fromUtf8("QPushButton {\n"
 "    background-color: transparent;\n"
 "    border: none;\n"
@@ -151,19 +152,34 @@ public:
         minus->setAutoExclusive(false);
         plus = new QPushButton(mainwindow);
         plus->setObjectName(QString::fromUtf8("plus"));
-        plus->setGeometry(QRect(426, 50, 31, 31));
+        plus->setGeometry(QRect(406, 50, 31, 31));
         plus->setStyleSheet(QString::fromUtf8("QPushButton {\n"
 "    background-color: transparent;\n"
 "    border: none;\n"
 "}\n"
 ""));
-    	QIcon icon4;
-    	icon4.addFile(QString::fromUtf8(":/plus/louder.svg"), QSize(), QIcon::Normal, QIcon::Off);
+        QIcon icon4;
+        icon4.addFile(QString::fromUtf8(":/plus/louder.svg"), QSize(), QIcon::Normal, QIcon::Off);
         plus->setIcon(icon4);
         plus->setIconSize(QSize(24, 24));
         plus->setCheckable(false);
         plus->setAutoRepeat(false);
         plus->setAutoExclusive(false);
+
+
+        change_path = new QPushButton(mainwindow);
+        change_path->setObjectName(QString::fromUtf8("change_path"));
+        change_path->setGeometry(QRect(452, 50, 8, 32));
+        change_path->setStyleSheet(QString::fromUtf8("QPushButton {\n"
+"    background-color: transparent;\n"
+"    border: none;\n"
+"}\n"
+""));
+        QIcon icon5;
+        icon5.addFile(QString::fromUtf8(":/chng_pth/path_chng.svg"), QSize(), QIcon::Normal, QIcon::Off);
+        change_path->setIcon(icon5);
+        change_path->setIconSize(QSize(8, 22));
+
         label = new QLabel(mainwindow);
         label->setObjectName(QString::fromUtf8("label"));
         label->setGeometry(QRect(0, 540, 500, 41));
@@ -195,6 +211,7 @@ public:
         sound->raise();
         minus->raise();
         plus->raise();
+        change_path->raise();
         label->raise();
         label_2->raise();
 
@@ -213,7 +230,8 @@ public:
         prev->setText(QString());
         minus->setText(QString());
         plus->setText(QString());
-        label->setText(QCoreApplication::translate("MainWindow", "Я помню", nullptr));
+        change_path->setText(QString());
+        label->setText(QCoreApplication::translate("MainWindow", "song name", nullptr));
         label_2->setText(QCoreApplication::translate("MainWindow", "artist", nullptr));
     }
 

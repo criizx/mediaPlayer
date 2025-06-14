@@ -10,14 +10,15 @@ public:
 
 	void setup(QWidget *container);
 
-	RotatingLabel *vinyl_label() const;
-	RotatingLabel *cover_label() const;
-	QPushButton *pause_button() const;
-	QPushButton *next_button() const;
-	QPushButton *prev_button() const;
-	QSlider *volume_slider() const;
-	QPushButton* add_volume() const;
-	QPushButton* reduce_volume() const;
+	[[nodiscard]] RotatingLabel *vinyl_label() const;
+	[[nodiscard]] RotatingLabel *cover_label() const;
+	[[nodiscard]] QPushButton *pause_button() const;
+	[[nodiscard]] QPushButton *next_button() const;
+	[[nodiscard]] QPushButton *prev_button() const;
+	[[nodiscard]] QSlider *volume_slider() const;
+	[[nodiscard]] QPushButton* add_volume() const;
+	[[nodiscard]] QPushButton* reduce_volume() const;
+	[[nodiscard]] QPushButton* change_path() const;
 	void change_ui(const music_metadata& metadata) const;
 
 private:

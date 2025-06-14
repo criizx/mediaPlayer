@@ -18,7 +18,7 @@ public:
 	int volume() const;
 	QString get_current_file_path() const;
 	QMediaPlayer* get_player() const;
-
+	void change_music_path(const QString& folderPath);
 
 private:
 	std::unique_ptr<QMediaPlaylist> playlist;
